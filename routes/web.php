@@ -15,8 +15,11 @@
     return view('welcome');
 });*/
 
+Route::get('/appold', function () {
+    return view('appold');
+});
+
 Auth::routes();
 
 Route::redirect('/', 'home');
 Route::get('/home', 'HomeController@index')->name('home');
-
