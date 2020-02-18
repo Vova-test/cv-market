@@ -29,8 +29,8 @@
 </head>
 <body>
     <div id="app">
-        <header>
-            <div  class="vh-min-6 uk-background-primary uk-light uk-panel uk-child-width-expand@s uk-text-center uk-grid padding-10">
+        <header class="header-fixed">
+            <div  class="uk-background-primary uk-light uk-panel uk-child-width-expand@s uk-text-center uk-grid padding-10">
                 <div class="uk-width-1-4">
                     <h2 class=" uk-align-left">
                          <a href="{{ url('/') }}">
@@ -48,19 +48,23 @@
                 </div>
                 <div class="uk-width-1-4">
                     <ul class="ul-menu">
+                        <li class="ul-menu">
+                            <a class="ahover {{ (request()->is('home')) ? 'active' : '' }}" 
+                                href="{{ route('home') }}">Main</a>
+                        </li>
                         @guest
                             <li class="ul-menu">
-                                <a class="{{ (request()->is('login')) ? 'active' : '' }}" 
+                                <a class="ahover {{ (request()->is('login')) ? 'active' : '' }}" 
                                     href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="ul-menu">
-                                    <a class="{{ (request()->is('register')) ? 'active' : '' }}" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="ahover {{ (request()->is('register')) ? 'active' : '' }}" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
                             <li class="ul-menu">
-                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <a class="ahover" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -73,18 +77,16 @@
             </div>
         </header>
 
-        <main class="py-4">
-            <div class="vh-min-80">
+        <main class="main-maggin">
+            <div>
                 @yield('content')
             </div>    
         </main>
 
     </div>
-    <footer>
-        <div  class="vh-min-4 uk-background-primary uk-light uk-panel padding-10">
-            <div class="uk-width-1-4 uk-align-center">
-                <h2 class=" uk-align-left">Test CV Market 2020 footer</h2>
-            </div>
+    <footer">
+        <div  class="uk-background-primary uk-light uk-text-center">
+            <a>Test CV Market 2020 footer</a>
         </div>
     </footer>
 </body>
