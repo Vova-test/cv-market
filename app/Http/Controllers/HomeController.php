@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\CV;
 
 class HomeController extends Controller
 {
@@ -11,10 +12,6 @@ class HomeController extends Controller
      *
      * @return void
      */
-    /*public function __construct()
-    {
-        $this->middleware('auth');
-    }*/
 
     /**
      * Show the application dashboard.
@@ -23,6 +20,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $cv = CV::select([
+            "id", 
+            "first_name",
+            "last_name",
+            "profession",
+            "salary",
+            "valute",
+            "age", 
+            "city",
+            "education",
+            "schedule",
+            "created_at"
+        ])->orderBy('created_at', 'desc')->get();
+        return view('home', ['cv'=>$cv]);
     }
 }
