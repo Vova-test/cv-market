@@ -23,4 +23,4 @@ Auth::routes();
 
 Route::redirect('/', 'home');
 Route::get('/home', 'HomeController@index')->name('home');//->middleware('auth');
-Route::get('/cv/{id}', 'CvController@index')->name('cv')->middleware('auth');
+Route::get('/cv/{cv}', 'CvController@index')->name('cv')->middleware('auth');

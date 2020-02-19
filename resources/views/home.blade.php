@@ -3,8 +3,8 @@
 @section('content')
     @foreach ($cv as $home) 
         <div class="uk-container uk-container-small">
-            <div class="uk-card uk-card-default uk-card-hover uk-width-1-1">
-                <div class="uk-card-header">
+            <div class="uk-card uk-card-default uk-card-hover uk-width-1-1 uk-margin-top">
+                <div class="uk-card-body">
                     <div class="uk-grid-small uk-flex-middle" uk-grid>
                         <div class="uk-width-expand">
                             <h3 class="uk-card-title uk-margin-remove-bottom">
