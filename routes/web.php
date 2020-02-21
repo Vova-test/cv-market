@@ -15,12 +15,22 @@
     return view('welcome');
 });*/
 
-Route::get('/appold', function () {
+/*Route::get('/appold', function () {
     return view('appold');
-});
+});*/
 
 Auth::routes();
 
 Route::redirect('/', 'home');
-Route::get('/home', 'HomeController@index')->name('home');//->middleware('auth');
-Route::get('/cv/{cv}', 'CvController@index')->name('cv')->middleware('auth');
+
+/*Route::get('/home', 'HomeController@index')
+	->name('home');*/
+
+Route::get('/home/{cheched?}', 'HomeController@index')->name('home');
+Route::post('/home/{cheched?}', 'HomeController@index');
+	/*->middleware('auth')
+	->middleware('check.manager');*/
+
+Route::get('/cv/{cv}', 'CvController@index')
+	->name('cv')
+		->middleware('auth');

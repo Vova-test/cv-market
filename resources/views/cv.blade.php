@@ -3,12 +3,17 @@
 @section('content')
     <div class="uk-container uk-container-small">
         <div class="uk-card uk-card-default uk-card-hover uk-width-1-1 uk-margin-top">
-        	<div class="uk-margin-small uk-background-green">
-        		<p  uk-margin>
-        			<a class="uk-button-small uk-button-primary" href="#" uk-icon="icon: file-pdf; ratio: 2"></a>
-        			<a class="uk-button-small uk-button-primary" href="#" uk-icon="icon: file-edit; ratio: 2"></a>
-				    <a class="uk-button-small uk-button-danger" href="#" uk-icon="icon: trash; ratio: 2"></a>
-				    <a class="uk-button-small uk-button-primary uk-align-right" href="#" uk-icon="icon: check; ratio: 2"></a>
+        	<div class="uk-card-header uk-padding-remove-bottom uk-background-muted">
+        		<p uk-margin>
+        			<a class="uk-button-small uk-button-primary" href="#" uk-icon="icon: file-pdf"></a>
+        			@can('update', $cv)
+        				<a class="uk-button-small uk-button-primary" href="#" uk-icon="icon: file-edit"></a>
+				    	<a class="uk-button-small uk-button-danger" href="#" uk-icon="icon: trash"></a>
+				    @endcan
+				    @can('check', $cv)	
+				    	<a class="uk-button-small uk-button-primary" href="#" uk-icon="icon: check"></a>
+				    @endcan
+				    <a class="uk-button-small uk-button-primary uk-align-right" href="/#cv-{{ $cv->id }}" uk-icon="icon: close"></a>
 				</p>
 			</div>
             <div class="uk-card-body">
@@ -45,11 +50,9 @@
                         <img class="uk-border-circle" width="40" height="40" src="images/avatar.jpg">
                     </div>
                 </div>
-                @guest
-	            	<div>"GUEST"</div>
-	            @else
+                @can('view', $cv)
 	            	<div>"Premium Information"</div>
-	            @endguest
+	            @endcan
 	            <article class="uk-article">
 				    <h5  class="uk-article-title">EXPERIENCE:</h5>
 				    <p>{{ $cv->experience }}</p>
