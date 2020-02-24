@@ -35,7 +35,7 @@ Route::get('/cv/{cv}', 'CvController@index')
 	->name('cv')
 		->middleware('auth');
 
-Route::get('/deletecv/{cv}', 'CvController@delete')->name('deleteCV');
-Route::get('/checkcv/{cv}', 'CvController@check')->name('checkCV');
-Route::get('/cvShowCreatePage', 'CvController@showCreatePage')->name('showCreatePage');
-Route::get('/cvShowUpdatePage', 'CvController@showUpdatePage')->name('showUpdatePage');
+Route::get('/cv-delete/{cv}', 'CvController@delete')->name('deleteCV');
+Route::get('/cv-check/{cv}', 'CvController@check')->name('checkCV');
+Route::get('/cv-create', 'CvController@showCreatePage')->name('showCreatePage');
+Route::get('/cv-update', 'CvController@showUpdatePage')->name('showUpdatePage');
