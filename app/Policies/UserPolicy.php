@@ -5,7 +5,7 @@ namespace App\Policies;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CvPolicy
+class UserPolicy
 {
     use HandlesAuthorization;
 
@@ -22,10 +22,5 @@ class CvPolicy
     public function create(User $user)
     {
         return $user->type === "Job seeker";
-    }
-
-    public function check(User $user)
-    {
-        return $user->type === "Manager";
     }
 }

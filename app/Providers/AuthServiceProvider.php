@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
-use App\Models\CV;
+/*use App\Models\CV;
 use App\Models\User;
 use App\Policies\CvPolicy;
+use App\Policies\UserPolicy;*/
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -16,7 +17,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-         'App\Models\CV' => 'App\Policies\CvPolicy',
+        'App\Models\CV' => 'App\Policies\CvPolicy',
+        'App\Models\User' => 'App\Policies\UserPolicy',
     ];
 
     /**

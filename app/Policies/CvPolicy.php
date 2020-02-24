@@ -32,8 +32,8 @@ class CvPolicy
         return $user->id === $cv->user_id;
     }
 
-    public function check(User $user)
+    public function check(User $user, CV $cv)
     {
-        return $user->type === "Manager";
+        return $user->type === "Manager" && !$cv->checked;
     }
 }

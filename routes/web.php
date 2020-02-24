@@ -26,11 +26,16 @@ Route::redirect('/', 'home');
 /*Route::get('/home', 'HomeController@index')
 	->name('home');*/
 
-Route::get('/home/{cheched?}', 'HomeController@index')->name('home');
-Route::post('/home/{cheched?}', 'HomeController@index');
+Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/home', 'HomeController@index')->name('posthome');
 	/*->middleware('auth')
 	->middleware('check.manager');*/
 
 Route::get('/cv/{cv}', 'CvController@index')
 	->name('cv')
 		->middleware('auth');
+
+Route::get('/deletecv/{cv}', 'CvController@delete')->name('deleteCV');
+Route::get('/checkcv/{cv}', 'CvController@check')->name('checkCV');
+Route::get('/cvShowCreatePage', 'CvController@showCreatePage')->name('showCreatePage');
+Route::get('/cvShowUpdatePage', 'CvController@showUpdatePage')->name('showUpdatePage');

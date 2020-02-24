@@ -48,6 +48,13 @@
                 </div>
                 <div class="uk-width-1-4">
                     <ul class="ul-menu">
+                        @can('create', 'App\Models\CV')
+                            <li class="ul-menu">
+                                <a class="ahover {{ (request()->is('showCreatePage')) ? 'active' : '' }}" href="{{ route('showCreatePage') }}">
+                                    Add CV
+                                </a>
+                            </li>
+                        @endcan
                         <li class="ul-menu">
                             <a class="ahover {{ (request()->is('home')) ? 'active' : '' }}" 
                                 href="{{ route('home') }}">Main</a>

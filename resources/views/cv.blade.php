@@ -8,10 +8,10 @@
         			<a class="uk-button-small uk-button-primary" href="#" uk-icon="icon: file-pdf"></a>
         			@can('update', $cv)
         				<a class="uk-button-small uk-button-primary" href="#" uk-icon="icon: file-edit"></a>
-				    	<a class="uk-button-small uk-button-danger" href="#" uk-icon="icon: trash"></a>
+				    	<a class="uk-button-small uk-button-danger" href="{{ route('deleteCV',['cv'=>$cv->id]) }}" uk-icon="icon: trash"></a>
 				    @endcan
 				    @can('check', $cv)	
-				    	<a class="uk-button-small uk-button-primary" href="#" uk-icon="icon: check"></a>
+				    	<a class="uk-button-small uk-button-primary" href="{{ route('checkCV',['cv'=>$cv->id]) }}" uk-icon="icon: check"></a>
 				    @endcan
 				    <a class="uk-button-small uk-button-primary uk-align-right" href="/#cv-{{ $cv->id }}" uk-icon="icon: close"></a>
 				</p>

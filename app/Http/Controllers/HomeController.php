@@ -23,8 +23,8 @@ class HomeController extends Controller
     {   
         $checked = 1;
 
-        if ($request->has('checked')) {
-            $checked = $request->checked;
+        if ($request->has('radio')) {
+            $checked = $request->radio;
         } else {
             if (Auth::check() && Auth::user()->type ==='Manager') {
                 $checked = 0; 
@@ -50,7 +50,8 @@ class HomeController extends Controller
 
         $cv = $cv->get();
 
-        return view('home', ['cvs'=>$cv,
+        return view('home', [
+            'cvs'=>$cv,
             'checked'=>$checked
         ]);
     }

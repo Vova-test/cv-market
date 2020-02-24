@@ -1,49 +1,35 @@
 @extends('layouts.app')
 
 @section('content')
-    @can('check','App\Models\CV')
-        <div class="uk-container uk-container-small uk-margin-xlarge-top">
-            <div class="uk-margin uk-grid-small uk-child-width-auto uk-margin-small-top uk-margin-small-left">
-                <label>
-                    <input class="uk-radio" type="radio" name="radio-1" value="1" 
-                    {{ $checked == 1 ? 'checked' : '' }}> 
-                        Checked
-                </label>
-                <label>
-                    <input class="uk-radio" type="radio" name="radio-0"  value="0" 
-                    {{ $checked == 0 ? 'checked' : '' }}> 
-                        Unchecked
-                </label>
+    @can('viewAny','App\Models\User')
+        <form name="checked-unchecked" method="post" action="{{ route('posthome')}}">
+            @csrf
+            <div class="uk-container uk-container-small uk-margin-xlarge-top">
+                <div class="uk-margin uk-grid-small uk-child-width-auto uk-margin-small-top uk-margin-small-left">
+                    <label>
+                        <input class="a uk-radio" type="radio" name="radio" value="1"
+                        {{ $checked == 1 ? 'checked' : '' }}
+                        href="{{ route('home', ['checked' => 1]) }}"
+                        onclick="clickRadio(this, 1)"> 
+                            Checked
+                    </label>
+                    <label>
+                        <input class="a uk-radio" type="radio" name="radio" value="0" 
+                        {{ $checked == 0 ? 'checked' : '' }}
+                        href="{{ route('home', ['checked' => 0]) }}"
+                        onclick="clickRadio(this, 0)"> 
+                            Unchecked
+                    </label>
+                </div>
             </div>
-        </div>
+        </form>
         <script type="text/javascript">
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $('input[type=radio]').change(function() {
-                let post =[];
-                let route = `/home/${checked}`;
-                let checked = this.value;
-                post = {
-                    checked : checked
-                };
-                // отправим jquery данные
-                $.post(
-                    route, 
-                    post,
-                    function(res){ 
-                        if (res) {
-                            location.reload();
-                            //console.log(res); 
-                        }
-                    }
-                );
-            });
-        </script>>
+            function clickRadio(el, checked) {
+                document.getElementsByName('checked-unchecked')[0].submit();
+                //console.log(typebutton);
+            }
+            
+        </script>
     @endcan    
     @foreach ($cvs as $cv) 
         <div id="cv-{{ $cv->id}}" class="uk-container uk-container-small">
