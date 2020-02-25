@@ -37,5 +37,7 @@ Route::get('/cv/{cv}', 'CvController@index')
 
 Route::get('/cv-delete/{cv}', 'CvController@delete')->name('deleteCV');
 Route::get('/cv-check/{cv}', 'CvController@check')->name('checkCV');
-Route::get('/cv-create', 'CvController@showCreatePage')->name('showCreatePage');
-Route::get('/cv-update', 'CvController@showUpdatePage')->name('showUpdatePage');
+Route::get('/card-create', 'CvController@showCreatePage')->name('showCreatePage');
+Route::get('/card-update/{cv}', 'CvController@showUpdatePage')->name('showUpdatePage');
+Route::post('/cv-create', 'CvController@create')->name('createCV');
+Route::post('/cv-update/{cv}', 'CvController@update')->name('updateCV');

@@ -7,7 +7,7 @@
         		<p uk-margin>
         			<a class="uk-button-small uk-button-primary" href="#" uk-icon="icon: file-pdf"></a>
         			@can('update', $cv)
-        				<a class="uk-button-small uk-button-primary" href="#" uk-icon="icon: file-edit"></a>
+        				<a class="uk-button-small uk-button-primary" href="{{ route('showUpdatePage',['cv'=>$cv->id]) }}" uk-icon="icon: file-edit"></a>
 				    	<a class="uk-button-small uk-button-danger" href="{{ route('deleteCV',['cv'=>$cv->id]) }}" uk-icon="icon: trash"></a>
 				    @endcan
 				    @can('check', $cv)	
