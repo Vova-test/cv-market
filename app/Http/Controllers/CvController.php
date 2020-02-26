@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\CV;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\CvCruPost;
 
 class CvController extends Controller
 {
@@ -78,8 +79,10 @@ class CvController extends Controller
     	return redirect()->route('home');
     }
 
-    public function update(Request $request, CV $cv) 
+    public function update(CvCruPost $request, CV $cv) 
     {
+    	$validated = $request->validated();
+
     	$cv->first_name = $request->firstName;
         $cv->last_name = $request->lastName;
         $cv->profession = $request->profession;
