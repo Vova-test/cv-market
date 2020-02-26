@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class CheckType
 {
@@ -17,9 +18,11 @@ class CheckType
     public function handle($request, Closure $next)
     {
         $user = Auth::user();
-        if($user->type != "Manager"){
+
+        if($user->type != User::MANAGER_TYPE){
             return redirect("/");
         }
+
         return $next($request);
     }
 }

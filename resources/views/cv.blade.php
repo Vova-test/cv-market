@@ -22,27 +22,33 @@
                         <h1 class="uk-article-title">
                             {{ $cv->first_name }} {{ $cv->last_name }}
                         </h1>
-                        <h2 class="uk-card-title">
-                            {{ $cv->profession }}
-                        </h2>
-                        <h2 class="uk-card-title">
-                            {{ $cv->salery }}
-                        </h2>    
+                        <h2 class="uk-card-title uk-margin-remove">
+                            {{ $cv->profession }}, {{ $cv->salary }}{{ $cv->currency }}
+                        </h2>  
                         <div uk-grid>
-                            <div class="uk-width-auto@m">
-                            	<div class="uk-margin-small-right" uk-icon="clock">
-                            	</div>                            	
-                                {{ $cv->created_at }}
+                            <div class="uk-width-auto">
+                            	<p>
+                            		<div class="uk-margin-small-right" uk-icon="clock"></div> 
+                            		{{ $cv->created_at }}
+                            	</p>
                             </div>
-                            <div class="uk-width-auto@m">
-                            	<div class="uk-margin-small-right" uk-icon="location">
-                            	</div>
-                                City: {{ $cv->city }}
-                            </div>
+                            @cannot('view', $cv)
+	                            <div class="uk-width-auto">
+	                            	<p>
+	                            		<div class="uk-margin-small-right" uk-icon="location"></div>
+	                                	City: {{ $cv->city }}
+	                                </p>
+	                            </div>
+	                        @endcannot
                         </div>
                         <div class="uk-grid uk-margin-remove-top">
-                            <div class="uk-width-auto@m">
-                                Work: {{ $cv->schedule }}
+                            <div class="uk-width-auto">
+                                Age: {{ $cv->age }}
+                            </div>
+                        </div>
+                        <div class="uk-grid uk-margin-remove-top uk-margin-bottom">
+                            <div class="uk-width-auto">
+                                Schedule: {{ $cv->schedule }}
                             </div>
                         </div>
                     </div>
@@ -51,30 +57,79 @@
                     </div>
                 </div>
                 @can('view', $cv)
-	            	<div>"Premium Information"</div>
+                	<h4 class="uk-margin-remove">
+		            	Email:  {{ $cv->email }}
+		            </h4>
+		            <h4 class="uk-margin-remove">
+		            	Phone number: {{ $cv->phone_number }}
+		            </h4>
+		            <div class="uk-margin-top">
+	                	<h4 class="uk-margin-remove">
+	                		<div class="uk-margin-small-right" uk-icon="location"></div>
+			            	Address:
+			            </h4>
+			            <div>
+			            	{{ $cv->street_address }},
+			            </div>
+			            <div>
+			            	{{ $cv->city }}, {{ $cv->region }},
+			            </div>
+			            <div>
+			            	{{ $cv->zip_code }},
+			            </div>
+			            <div>
+			            	{{ $cv->country }}
+			            </div>
+			        </div>
+	            @else
+	            	<div class="uk-card uk-card-primary uk-card-body">
+	            		<h2 class="uk-card-title uk-margin-remove">
+	            			Get a premium account to see more information
+	            		</h2>
+	            	</div>
 	            @endcan
-	            <article class="uk-article">
-				    <h5  class="uk-article-title">EXPERIENCE:</h5>
-				    <p>{{ $cv->experience }}</p>
-				</article>
-	            <h4>
-	            	EDUCATION:
-	            </h4>
-	            <div>
-	            	{{ $cv->education }}	
-	            </div>	
-	            <h4>
-	            	LANGUAGES:
-	            </h4>
-	            <div>
-	            	{{ $cv->language }}	
-	            </div>
-	            <h4>
-	            	ADDITIONAL INFORMATION:
-	            </h4>
-	            <div>
-	            	{{ $cv->add_information }}	
-	            </div>
+	            <div class="uk-margin-top">
+					<h4 class="uk-margin-remove">
+						Experience:
+					</h4>
+					<div>
+						{{ $cv->experience }}
+					</div>
+				</div>
+				<div class="uk-margin-top">
+		            <h4 class="uk-margin-remove">
+		            	Education:
+		            </h4>
+		            <div>
+		            	{{ $cv->education }}	
+		            </div>
+		        </div>	
+	            @can('view', $cv)
+	            	<div class="uk-margin-top">
+			            <h4 class="uk-margin-remove">
+			            	Skills:
+			            </h4>
+			            <div>
+			            	{{ $cv->skills }}	
+			            </div>
+			        </div>
+			        <div class="uk-margin-top">
+			            <h4 class="uk-margin-remove">
+			            	Languages:
+			            </h4>
+			            <div>
+			            	{{ $cv->language }}	
+			            </div>
+			        </div>
+		        @endcan
+		        <div class="uk-margin-top">
+		            <h4 class="uk-margin-remove">
+		            	Addition information:
+		            </h4>
+		            <div>
+		            	{{ $cv->add_information }}	
+		            </div>
+		        </div>
             </div>
         </div>
     </div>

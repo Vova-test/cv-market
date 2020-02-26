@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CV;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -23,13 +24,14 @@ class HomeController extends Controller
     {   
         $checked = 1;
 
+        if (Auth::check() && Auth::user()->type == User::MANAGER_TYPE) {
+            $checked = 0; 
+        }
+
         if ($request->has('radio')) {
-            $checked = $request->radio;
-        } else {
-            if (Auth::check() && Auth::user()->type ==='Manager') {
-                $checked = 0; 
-            }
-        }     
+            $checked = $request->radio;            
+        }   
+
         $cv = CV::select([
             "id", 
             "first_name",
@@ -43,16 +45,16 @@ class HomeController extends Controller
             "schedule",
             "created_at"
         ]);
-        $cv = $cv->where('checked',$checked);
+
+        $cv = $cv->where('checked', $checked);
+
         if (!empty($checked)) {            
             $cv = $cv->orderBy('created_at', 'desc');    
         }
 
-        $cv = $cv->get();
-
         return view('home', [
-            'cvs'=>$cv,
-            'checked'=>$checked
+            'cvs' => $cv->get(),
+            'checked' => $checked
         ]);
     }
 }

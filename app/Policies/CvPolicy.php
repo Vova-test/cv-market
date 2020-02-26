@@ -12,19 +12,19 @@ class CvPolicy
 
     public function viewAny(User $user)
     {
-        return $user->type === "Manager";
+        return $user->type == User::MANAGER_TYPE;
     }
 
     public function view(User $user, CV $cv)
     {
-        return $user->type === "Employer" && $user->premium
+        return $user->type == User::EMPLOYER_TYPE && $user->premium
             || $user->id === $cv->user_id
-            || $user->type === "Manager";
+            || $user->type == User::MANAGER_TYPE;
     }
 
     public function create(User $user)
     {
-        return $user->type === "Job seeker";
+        return $user->type == User::JOB_SEEKER_TYPE;
     }
 
     public function update(User $user, CV $cv)
@@ -34,6 +34,6 @@ class CvPolicy
 
     public function check(User $user, CV $cv)
     {
-        return $user->type === "Manager" && !$cv->checked;
+        return $user->type == User::MANAGER_TYPE && !$cv->checked;
     }
 }

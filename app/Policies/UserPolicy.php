@@ -11,16 +11,16 @@ class UserPolicy
 
     public function viewAny(User $user)
     {
-        return $user->type === "Manager";
+        return $user->type == User::MANAGER_TYPE;
     }
 
     public function view(User $user)
     {
-        return $user->type === "Employer" && $user->premium || $user->type === "Manager";
+        return $user->type == User::EMPLOYER_TYPE && $user->premium || $user->type == User::MANAGER_TYPE;
     }
 
     public function create(User $user)
     {
-        return $user->type === "Job seeker";
+        return $user->type == User::JOB_SEEKER_TYPE;
     }
 }

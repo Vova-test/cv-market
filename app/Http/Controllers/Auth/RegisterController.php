@@ -23,6 +23,15 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
+    public function showRegistrationForm()
+    {   
+        return view('auth.register', [
+            'userTypes' => [
+                User::JOB_SEEKER_TYPE, 
+                User::EMPLOYER_TYPE
+            ]
+        ]);
+    }
 
     /**
      * Where to redirect users after registration.

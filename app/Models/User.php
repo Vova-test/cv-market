@@ -9,6 +9,9 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use Notifiable;
+    const MANAGER_TYPE = 'Manager';
+    const JOB_SEEKER_TYPE = 'Job seeker';
+    const EMPLOYER_TYPE = 'Employer';
 
     /**
      * The attributes that are mass assignable.

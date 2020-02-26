@@ -66,8 +66,9 @@
 
                             <div class="col-md-6">
                                 <select size="1" id="type-user" class="form-control" name="type" required autocomplete="type">
-                                    <option value="Job seeker">Job seeker</option>
-                                    <option value="Employer">Employer</option>
+                                    @foreach ($userTypes as $userType)
+                                        <option value="{{ $userType }}">{{ $userType }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>

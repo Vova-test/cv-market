@@ -6,50 +6,27 @@ use Illuminate\Http\Request;
 use App\Models\CV;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Requests\CvCruPost;
+use App\Http\Requests\CvRequest;
 
 class CvController extends Controller
 {
     public function index(CV $cv) 
     {
-    	return view('cv', ['cv'=>$cv]);
+    	return view('cv', ['cv' => $cv]);
     }
 
     public function showCreatePage(CV $cv) 
     {
     	return view('card', [
-    		'nameRoute'=>'createCV',
-    		'cvs'=>[]
+    		'nameRoute' => 'createCV',
+    		'cvs' => []
     	]);
     }
 
-    public function create(Request $request) 
+    public function create(CvRequest $request) 
     {
-    	$validator = Validator::make($request->all(), [
-            'firstName' => 'bail|required|max:255',
-    		'lastName' => 'bail|required|max:255',
-    		'profession' => 'bail|required|max:255',
-    		'salary' => 'nullable|numeric|max:1000000000',
-    		'currency' => 'max:255',
-    		'city' => 'max:255',
-    		'street' => 'max:255',
-    		'region' => 'max:255',
-    		'country' => 'max:255',
-    		'zip' => 'nullable|numeric|max:999999',
-    		'phone' => 'max:255',
-    		'email' => 'bail|required|email:rfc,dns',
-    		'language' => 'max:255',
-    		'age' => 'nullable|numeric|max:100',
-    		'schedule' => 'max:255',
-        ]);
+    	$validated = $request->validated();
 
-        if ($validator->fails()) {
-        	//dd($validator);
-            return back()
-                        ->withErrors($validator)
-                        ->withInput();
-                        //redirect('post/create')
-        }
         $cv = new CV;
 
         $cv->first_name = $request->firstName;
@@ -74,12 +51,19 @@ class CvController extends Controller
         $cv->user_id = Auth::user()->id;
 
         $cv->save();
-  		//dd($request);
 
     	return redirect()->route('home');
     }
 
-    public function update(CvCruPost $request, CV $cv) 
+    public function showUpdatePage(CV $cv) 
+    {
+    	return view('card', [
+    		'cvs' => $cv,
+    		'nameRoute' => 'updateCV'
+    	]);
+    }
+
+    public function update(CvRequest $request, CV $cv) 
     {
     	$validated = $request->validated();
 
@@ -105,14 +89,8 @@ class CvController extends Controller
 
         $cv->save();
 
-    	return view('cv', ['cv'=>$cv]);
-    }
-
-    public function showUpdatePage(CV $cv) 
-    {
-    	return view('card', [
-    		'cvs'=>$cv,
-    		'nameRoute'=>'updateCV'
+    	return view('cv', [
+    		'cv' => $cv
     	]);
     }
 
@@ -127,14 +105,5 @@ class CvController extends Controller
     	$cv->checked = 1;
     	$cv->save();
     	return redirect()->route('home');
-    }
-
-    public function premium(CV $cv) 
-    {
-    	//
-    }
-    public function manager(CV $cv) 
-    {
-    	//
     }
 }
