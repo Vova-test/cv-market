@@ -54,8 +54,9 @@ class HomeController extends Controller
         }
 
         return view('home', [
-            'cvs' => $cv->get(),
+            'cvs' => $cv->paginate(10),
             'checked' => $checked
         ]);
+        //get()
     }
 }

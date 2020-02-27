@@ -30,10 +30,11 @@
             }
             
         </script>
-    @endcan    
-    @foreach ($cvs as $cv) 
-        <div id="cv-{{ $cv->id}}" class="uk-container uk-container-small">
-            <div class="uk-card uk-card-default uk-card-hover uk-width-1-1 uk-margin-top">
+    @endcan 
+
+    <div class="uk-container uk-container-small">
+        @foreach ($cvs as $cv) 
+            <div id="cv-{{ $cv->id}}" class="uk-card uk-card-default uk-card-hover uk-width-1-1 uk-margin-top">
                 <div class="uk-card-body">
                     <div class="uk-grid-small uk-flex-middle" uk-grid>
                         <div class="uk-width-expand">
@@ -72,8 +73,11 @@
                     </div>
                 </div>
             </div>
+        @endforeach
+        <div class="uk-card-default uk-card-hover uk-width-1-1 uk-margin-top uk-align-center">
+            {{ $cvs->links() }}
         </div>
-    @endforeach
+    </div>
 @endsection
 
 
