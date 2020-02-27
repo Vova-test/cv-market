@@ -43,7 +43,8 @@ class HomeController extends Controller
             "city",
             "education",
             "schedule",
-            "created_at"
+            "created_at",
+            "image_link"
         ]);
 
         $cv = $cv->where('checked', $checked);

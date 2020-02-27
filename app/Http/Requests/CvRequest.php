@@ -24,6 +24,7 @@ class CvRequest extends FormRequest
             'language' => 'max:255',
             'age' => 'nullable|numeric|max:100',
             'schedule' => 'max:255',
+            'imageLink' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',  
         ];
     }
 }

@@ -62,9 +62,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="uk-width-auto">
-                            <img class="uk-border-circle" width="40" height="40" src="images/avatar.jpg">
-                        </div>
+                        @if (!empty($cv->image_link))
+                            <div class="uk-width-auto" uk-lightbox>
+                                <a class="uk-inline" href="{{ "/images/$cv->image_link" }}" data-caption="Photo on CV-market">
+                                    <img width="100" src="{{ "/images/$cv->image_link" }}">
+                                </a>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -26,7 +26,9 @@ class CvController extends Controller
     public function create(CvRequest $request) 
     {
     	$validated = $request->validated();
-
+        //var_dump($request->imageLink);die();
+        $imageName = time().'.'.$request->imageLink->extension();   
+        $request->imageLink->move(public_path('images'), $imageName);
         $cv = new CV;
 
         $cv->first_name = $request->firstName;
@@ -48,6 +50,7 @@ class CvController extends Controller
         $cv->age = $request->age;
         $cv->schedule = $request->schedule;
         $cv->add_information = $request->addInformation;
+        $cv->image_link = $imageName;
         $cv->user_id = Auth::user()->id;
 
         $cv->save();
@@ -66,6 +69,9 @@ class CvController extends Controller
     public function update(CvRequest $request, CV $cv) 
     {
     	$validated = $request->validated();
+
+        $imageName = time().'.'.$request->imageLink->extension();   
+        $request->imageLink->move(public_path('images'), $imageName);
 
     	$cv->first_name = $request->firstName;
         $cv->last_name = $request->lastName;
@@ -86,6 +92,7 @@ class CvController extends Controller
         $cv->age = $request->age;
         $cv->schedule = $request->schedule;
         $cv->add_information = $request->addInformation;
+        $cv->image_link = $imageName;
 
         $cv->save();
 

@@ -10,13 +10,16 @@
             </ul>
         </div>
     @endif
-    <form name="save" method="post" action="{{ route($nameRoute,['cv'=>$cvs->id ?? ''])}}">
+    <form name="save" method="post" action="{{ route($nameRoute,['cv'=>$cvs->id ?? ''])}}" enctype="multipart/form-data">
         @csrf
         <fieldset class="uk-fieldset uk-margin-large">
             <div class="uk-container uk-container-small">
                 <div class="uk-card uk-card-default uk-card-hover uk-width-1-1 uk-margin-top">
                     <div class="uk-card-body">
                         <legend class="uk-legend  uk-text-center">Creating new CV</legend>
+                        <div class="uk-margin">
+                            <input type="file" name="imageLink" class="form-control">
+                        </div>
                         <div class="uk-child-width-expand" uk-grid>
                             <div class="uk-width-expand">
                                 <label for="firstName">First name</label>

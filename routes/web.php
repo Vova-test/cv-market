@@ -41,3 +41,6 @@ Route::get('/card-create', 'CvController@showCreatePage')->name('showCreatePage'
 Route::get('/card-update/{cv}', 'CvController@showUpdatePage')->name('showUpdatePage');
 Route::post('/cv-create', 'CvController@create')->name('createCV');
 Route::post('/cv-update/{cv}', 'CvController@update')->name('updateCV');
+
+Route::get('image-upload', 'ImageUploadController@imageUpload')->name('image.upload'); 
+Route::post('image-upload', 'ImageUploadController@imageUploadPost')->name('image.upload.post'); 
