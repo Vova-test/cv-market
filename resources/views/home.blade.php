@@ -2,7 +2,7 @@
 
 @section('content')
     @can('viewAny','App\Models\User')
-        <form name="checked-unchecked" method="post" action="{{ route('posthome')}}">
+        <form name="checked-unchecked" method="get" action="{{ route('home')}}">
             @csrf
             <div class="uk-container uk-container-small uk-margin-xlarge-top">
                 <div class="uk-margin uk-grid-small uk-child-width-auto uk-margin-small-top uk-margin-small-left">
@@ -33,6 +33,9 @@
     @endcan 
 
     <div class="uk-container uk-container-small">
+        <div class="uk-card-default uk-card-hover uk-width-1-1 uk-margin-top uk-align-center">
+            {{ $cvs->appends(request()->query())->links() }}
+        </div>
         @foreach ($cvs as $cv) 
             <div id="cv-{{ $cv->id}}" class="uk-card uk-card-default uk-card-hover uk-width-1-1 uk-margin-top">
                 <div class="uk-card-body">
@@ -64,9 +67,9 @@
                             </div>
                         </div>
                         @if (!empty($cv->image_link))
-                            <div class="uk-width-auto" uk-lightbox>
-                                <a class="uk-inline" href="{{ "/images/$cv->image_link" }}" data-caption="Photo on CV-market">
-                                    <img width="100" src="{{ "/images/$cv->image_link" }}">
+                            <div class="uk-width-auto" uk-grid uk-lightbox="animation: slide">
+                                <a class="uk-inline" href="{{ '/images/' . $cv->image_link }}" data-caption="Photo on CV-market">
+                                    <img width="100" src="{{ '/images/' . $cv->image_link }}">
                                 </a>
                             </div>
                         @endif

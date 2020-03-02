@@ -15,11 +15,34 @@ class CvController extends Controller
     	return view('cv', ['cv' => $cv]);
     }
 
-    public function showCreatePage(CV $cv) 
+    public function showCreatePage(CV $cv, Request $request) 
     {
     	return view('card', [
     		'nameRoute' => 'createCV',
-    		'cvs' => []
+    		'cv' => [
+                "first_name" => $request->old('first_name'),
+                "last_name" => $request->old('last_name'),
+                "profession" => $request->old('profession'),
+                "salary" => $request->old('salary'),
+                "currency" => $request->old('currency'),
+                "city" => $request->old('city'),
+                "street_address" => $request->old('street_address'),
+                "region" => $request->old('region'),
+                "country" => $request->old('country'),
+                "zip_code" => $request->old('zip_code'),
+                "phone_number" => $request->old('phone_number'),
+                "email" => $request->old('email'),
+                "education" => $request->old('education'),
+                "experience" => $request->old('experience'),
+                "skills" => $request->old('skills'),
+                "language" => $request->old('language'),
+                "age" => $request->old('age'),
+                "schedule" => $request->old('schedule'),
+                "add_information" => $request->old('add_information'),
+                "image_link" => $request->old('image_link'),
+                "schedule" => $request->old('schedule')
+            ],
+
     	]);
     }
 
@@ -27,12 +50,12 @@ class CvController extends Controller
     {
     	$validated = $request->validated();
         //var_dump($request->imageLink);die();
-        $imageName = time().'.'.$request->imageLink->extension();   
-        $request->imageLink->move(public_path('images'), $imageName);
+        $image_name = time().'.'.$request->image_link->extension();   
+        $request->image_link->move(public_path('images'), $image_name);
         $cv = new CV;
 
-        $cv->first_name = $request->firstName;
-        $cv->last_name = $request->lastName;
+        $cv->first_name = $request->first_name;
+        $cv->last_name = $request->last_name;
         $cv->profession = $request->profession;
         $cv->salary = $request->salary;
         $cv->currency = $request->currency;
@@ -40,8 +63,8 @@ class CvController extends Controller
         $cv->street_address = $request->street;
         $cv->region = $request->region;
         $cv->country = $request->country;
-        $cv->zip_code = $request->zip;
-        $cv->phone_number = $request->phone;
+        $cv->zip_code = $request->zip_code;
+        $cv->phone_number = $request->phone_number;
         $cv->email = $request->email;
         $cv->education = $request->education;
         $cv->experience = $request->experience;
@@ -49,8 +72,8 @@ class CvController extends Controller
         $cv->language = $request->language;
         $cv->age = $request->age;
         $cv->schedule = $request->schedule;
-        $cv->add_information = $request->addInformation;
-        $cv->image_link = $imageName;
+        $cv->add_information = $request->add_information;
+        $cv->image_link = $image_name;
         $cv->user_id = Auth::user()->id;
 
         $cv->save();
@@ -60,8 +83,9 @@ class CvController extends Controller
 
     public function showUpdatePage(CV $cv) 
     {
+        //dd($cv->attributesToArray());
     	return view('card', [
-    		'cvs' => $cv,
+    		'cv' => $cv->attributesToArray(),
     		'nameRoute' => 'updateCV'
     	]);
     }
@@ -69,12 +93,18 @@ class CvController extends Controller
     public function update(CvRequest $request, CV $cv) 
     {
     	$validated = $request->validated();
+        $oldFileContent = base64_encode(file_get_contents(public_path('images') . '/' . $cv->image_link));
+        $newFileContent = base64_encode(file_get_contents($request->image_link->getPathname()));
 
-        $imageName = time().'.'.$request->imageLink->extension();   
-        $request->imageLink->move(public_path('images'), $imageName);
+        if ($request->image_link && $oldFileContent != $newFileContent) {
+            $image_name = time().'.'.$request->image_link->extension();   
+            $request->image_link->move(public_path('images'), $image_name);
 
-    	$cv->first_name = $request->firstName;
-        $cv->last_name = $request->lastName;
+            $cv->image_link = $image_name;
+        }
+
+    	$cv->first_name = $request->first_name;
+        $cv->last_name = $request->last_name;
         $cv->profession = $request->profession;
         $cv->salary = $request->salary;
         $cv->currency = $request->currency;
@@ -82,8 +112,8 @@ class CvController extends Controller
         $cv->street_address = $request->street;
         $cv->region = $request->region;
         $cv->country = $request->country;
-        $cv->zip_code = $request->zip;
-        $cv->phone_number = $request->phone;
+        $cv->zip_code = $request->zip_code;
+        $cv->phone_number = $request->phone_number;
         $cv->email = $request->email;
         $cv->education = $request->education;
         $cv->experience = $request->experience;
@@ -91,8 +121,7 @@ class CvController extends Controller
         $cv->language = $request->language;
         $cv->age = $request->age;
         $cv->schedule = $request->schedule;
-        $cv->add_information = $request->addInformation;
-        $cv->image_link = $imageName;
+        $cv->add_information = $request->add_information;
 
         $cv->save();
 

@@ -54,8 +54,8 @@
                     </div>
                     @if (!empty($cv->image_link))
                     	<div class="uk-width-auto" uk-lightbox>
-	                    	<a class="uk-inline" href="{{ "/images/$cv->image_link" }}" data-caption="Photo on CV-market">
-					            <img width="250" src="{{ "/images/$cv->image_link" }}">
+	                    	<a class="uk-inline" href="{{ '/images/' . $cv->image_link }}" data-caption="Photo on CV-market">
+					            <img width="250" src="{{ asset('/images/' . $cv->image_link) }}">
 					        </a>
 	                    </div>
                     @endif
