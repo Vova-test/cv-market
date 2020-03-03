@@ -27,6 +27,10 @@ class HomeController extends Controller
 
     public function show(Request $request)
     {   
+        if (!isset($request['page'])) {
+            $request['page'] = 1;
+        }
+        
         $check = 1;
 
         if (Auth::check() && Auth::user()->type == User::MANAGER_TYPE) {

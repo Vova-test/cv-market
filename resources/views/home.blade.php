@@ -20,11 +20,11 @@
         <div class="uk-container uk-container-small">
             <div v-if="last > 1">
                 <ul class="uk-pagination uk-flex-center" uk-margin>
-                    <li><a  href="#" ><span uk-pagination-previous></span></a></li>
-                        <div v-for="page in last"> 
+                    <li class="uk-padding-remove"><button v-if="current > 1" v-on:click="current=(current-1)"><span uk-pagination-previous></span></button></li>
+                        <div class="uk-padding-remove" v-for="page in last"> 
                             <li><button v-on:click="current=page">@{{page}}</button></li>
                         </div> 
-                    <li><a v-bind:href="lastUrl"><span uk-pagination-next></span></a></li>
+                    <li class="uk-padding-remove"><button v-if="current < last" v-on:click="current=(current+1)"><span uk-pagination-next></span></button></li>
                 </ul> 
             </div>           
             <div v-for="cv in cvs"> 
@@ -89,7 +89,7 @@
             },
             methods: {
                 change: async function() {
-                    let url = `/home/show/?checked=${this.checked}`;
+                    let url = `/home/show/?checked=${this.checked}&page=${this.current}`;
                     let response = await fetch(url);
                     let result = await response.json();
                     //this.checked = result.checked;
@@ -109,6 +109,7 @@
             },
             watch: {
                 checked: function () {
+                    this.current = 1;
                     this.change();
                 },
                 current: function () {
