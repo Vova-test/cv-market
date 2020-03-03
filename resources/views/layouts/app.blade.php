@@ -84,7 +84,7 @@
             </div>
         </header>
 
-        <main class="main-maggin">
+        <main class="main-margin">
             <div>
                 @yield('content')
             </div>    

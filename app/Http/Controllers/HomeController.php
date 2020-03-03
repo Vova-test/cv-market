@@ -20,18 +20,18 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(Request $request)
+    public function index()
+    {
+        return view('home');
+    }
+
+    public function show(Request $request)
     {   
-        $checked = 1;
+        $check = 1;
 
         if (Auth::check() && Auth::user()->type == User::MANAGER_TYPE) {
-            $checked = 0; 
+            $check = $request['checked']; 
         }
-
-        if ($request->has('radio')) {
-            $checked = $request->radio;            
-        }   
-
         $cv = CV::select([
             "id", 
             "first_name",
@@ -47,16 +47,15 @@ class HomeController extends Controller
             "image_link"
         ]);
 
-        $cv = $cv->where('checked', $checked);
+        $cv = $cv->where('checked', $check);
 
-        if (!empty($checked)) {            
+        if (!empty($check)) {            
             $cv = $cv->orderBy('created_at', 'desc');    
         }
 
-        return view('home', [
+        return response()->json([
             'cvs' => $cv->paginate(10),
-            'checked' => $checked
+            'checked' => $check
         ]);
-        //get()
     }
 }

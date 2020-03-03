@@ -23,17 +23,14 @@ Auth::routes();
 
 Route::redirect('/', 'home');
 
-/*Route::get('/home', 'HomeController@index')
-	->name('home');*/
-
 Route::get('/home', 'HomeController@index')->name('home');
-Route::post('/home', 'HomeController@index')->name('posthome');
-	/*->middleware('auth')
-	->middleware('check.manager');*/
+//Route::post('/home', 'HomeController@index')->name('posthome');
 
 Route::get('/cv/{cv}', 'CvController@index')
 	->name('cv')
 		->middleware('auth');
+Route::get('/home/show', 'HomeController@show')->name('home.show');
+
 
 Route::get('/cv-delete/{cv}', 'CvController@delete')->name('deleteCV');
 Route::get('/cv-check/{cv}', 'CvController@check')->name('checkCV');
