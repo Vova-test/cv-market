@@ -54,7 +54,7 @@ class HomeController extends Controller
         }
 
         return response()->json([
-            'cvs' => $cv->paginate(10),
+            'cvs' => $cv->paginate(5),
             'checked' => $check
         ]);
     }

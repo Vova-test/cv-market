@@ -15,7 +15,7 @@ $factory->define(CV::class, function (Faker $faker) {
     	 'salary' => $faker->randomDigit*1000,
     	 'currency' => $faker->currencyCode,
     	 'city' => $faker->city,
-    	 'address' => $faker->address,
+    	 'street_address' => $faker->address,
     	 'phone_number' => $faker->e164PhoneNumber,
     	 'email' => $faker->email,
     	 'education' => $faker->jobTitle,

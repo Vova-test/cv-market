@@ -12,6 +12,6 @@ class CvTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\CV::class, 50)->create();
+        factory(App\Models\CV::class, 250)->create();
     }
 }
