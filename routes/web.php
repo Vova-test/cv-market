@@ -43,3 +43,4 @@ Route::get('image-upload', 'ImageUploadController@imageUpload')->name('image.upl
 Route::post('image-upload', 'ImageUploadController@imageUploadPost')->name('image.upload.post'); 
 Route::get('/template/index', 'TemplateController@index');
 Route::get('/template/show', 'TemplateController@show');
+Route::get('/test', 'TestController@test');

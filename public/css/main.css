@@ -18,14 +18,14 @@
 	background-color: green;
 }
 
-.yellow-color {
+.purple-blue-color {
 	color: white;
-	background-color: yellow;
+	background-color: #3c098d;
 }
 
-.gray-color {
+.light-red-color {
 	color: white;
-	background-color: gray;
+	background-color: #ff0e3b;
 }
 
 .brown-color {
@@ -33,8 +33,16 @@
 	background-color: brown;
 }
 
+.mazarine-color {
+	color: white;
+	background: #190a49;
+}
+
 .bg-color-shadow {
 	background-color: #200d2942;
+}
+.bg-color-shadow2 {
+	background-color: #b1125042;
 }
 
 .height-100 {
@@ -74,7 +82,7 @@
 }
 
 .my-height-80p {
-	height: 80vh;
+	height: 80%;
 }
 
 .my-height-90 {
@@ -93,6 +101,12 @@
 .grid-cl-3 {
 	display: grid;
 	grid-template-columns: 33.33% 33.33% 33.33%;
+	grid-template-rows: 100%;
+}
+
+.grid-cl-2 {
+	display: grid;
+	grid-template-columns: 70% 30%;
 	grid-template-rows: 100%;
 }
 
@@ -120,6 +134,11 @@ div.bg-img {
 	color: white;
 	background-size: cover;
 }
+div.bg-img2 {
+	background-image: url('/images/most_eitai_tokio_yaponiya_98445_1920x1080.jpg');
+	color: white;
+	background-size: cover;
+}
 
 .font-arial {
 	font-family: Arial; 
@@ -130,6 +149,15 @@ div.bg-img {
 	padding-top: 20%;
 	padding-left: 30%;
 }
+
+.font-0-5em {
+	font-size: 0.5em;
+}
+
+.font-1-5em {
+	font-size: 1.5em;
+}
+
 .font-2em {
 	font-size: 2em;
 }
@@ -171,9 +199,6 @@ div.bg-img {
 }
 
 .logo {
-    position: absolute;
-    top: 15px;
-    left: 30px;
     padding: 10px;
     color: white;
     background-color: purple;
@@ -185,21 +210,69 @@ div.bg-img {
 	color: white;
 }
 
-.my-nav {
+.my-nav a:hover, a>*:hover {
+	cursor: pointer;
+	color: red;
+}
 
+.my-nav nav a:not(:last-of-type) {
+    margin-right: 52px;
+}
+
+.my-nav a:not(:last-of-type) {
+    margin-right: 30px;
 }
 
 .my-flex-container	{
+	padding: 0 30px;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	align-items: stretch;
+	align-items: center;
 }
 
-.my-flex-container > .my-flex-block {
-
+.my-icon-color {
+	color: white;
 }
 
-.my-flex-block	{
+.auto-center {
+	padding: 20%;
+}
 
+p.dline {
+	line-height: 1.7;
+}
+
+.padding-h-20p {
+	padding-left: 20%;
+	padding-right: 20%;
+}
+
+.padding-5-20p {
+	padding: 5% 20%;
+}
+
+.logo-circle {
+	width: 250px;
+	height: 250px;
+	border-radius: 50%;
+    color: white;
+    line-height: 250px;
+    text-align: center;
+    background-color: purple;
+}
+
+.auto_margin {
+	margin: auto;
+}
+
+.border-top {
+	border-top: solid 1px #dfddeb;
+}
+
+.my-text {
+	width: 50%;
+	height: 90%;
+	padding: 5% 25%;
+	font-style: italic;
 }
