@@ -41,3 +41,5 @@ Route::post('/cv-update/{cv}', 'CvController@update')->name('updateCV');
 
 Route::get('image-upload', 'ImageUploadController@imageUpload')->name('image.upload'); 
 Route::post('image-upload', 'ImageUploadController@imageUploadPost')->name('image.upload.post'); 
+Route::get('/template/index', 'TemplateController@index');
+Route::get('/template/show', 'TemplateController@show');
