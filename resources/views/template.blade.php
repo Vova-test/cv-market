@@ -127,14 +127,24 @@
         </div> 
         <div class="my-height-60 grid-cl-40-60">
             <div class="height-100 bg-img2">
-                <div class="height-100 bg-color-shadow2"></div>                 
+                    <div class="height-100 bg-color-shadow2"></div>
             </div>
-            <div class="purple-blue-color">
-                
+            <div class="purple-blue-color padding-5-20p">
+                <div class="gray-text">INTERPRETING NONSENSE</div>
+                <div class="font-3em">ORIGINS AND DISCOVERY</div>
+                <ul class="li-none-style gray-text margin-padding-0 margin-h-30p font-1-5em my-ul">
+                    <li><span class="icon icon-checkmark  padding-r-20p red-icon-color"></span>Bacon Ipsum – Served all day</li>
+                    <li><span class="icon icon-checkmark padding-r-20p red-icon-color"></span>Hipster Ipsum – In case</li>
+                    <li><span class="icon icon-checkmark padding-r-20p red-icon-color"></span>Corporate Ipsum</li>
+                    <li><span class="icon icon-checkmark padding-r-20p red-icon-color"></span>Legal Ipsum</li>
+                </ul> 
+                <button class="light-red-color main-buttom-style">
+                    READ MORE
+                </button>               
             </div>
         </div>
         <div class="main-size my-height-80 green-color">
-            <h1>Fifth part</h1>
+            <div class="font-2em">Fifth part</div>
         </div> 
         <div class="main-size main-color">
             <h1>Sixth part</h1>
