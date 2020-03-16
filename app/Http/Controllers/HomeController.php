@@ -3,23 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\CV;
+use App\Services\CvService;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    const COUNT_CVS = 5;
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
+    public function __construct(CvService $cv)
+    {
+        $this->cv = $cv;
+    }
+
     public function index()
     {
         return view('home');
@@ -36,30 +32,13 @@ class HomeController extends Controller
         if (Auth::check() && Auth::user()->type == User::MANAGER_TYPE) {
             $check = $request['checked']; 
         }
-        $cv = CV::select([
-            "id", 
-            "first_name",
-            "last_name",
-            "profession",
-            "salary",
-            "currency",
-            "age", 
-            "city",
-            "education",
-            "schedule",
-            "created_at",
-            "image_link"
+        
+        $response = $this->cv->paginate([
+            'check' => $check,
+            'pagination' => self::COUNT_CVS,
+            'page'  => $request['page']
         ]);
 
-        $cv = $cv->where('checked', $check);
-
-        if (!empty($check)) {            
-            $cv = $cv->orderBy('created_at', 'desc');    
-        }
-
-        return response()->json([
-            'cvs' => $cv->paginate(5),
-            'checked' => $check
-        ]);
+        return response()->json($response);
     }
 }

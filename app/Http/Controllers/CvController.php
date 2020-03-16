@@ -4,15 +4,45 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CV;
+use App\Services\CvService;
+use App\Services\EmailService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\CvRequest;
 
 class CvController extends Controller
 {
+    public function __construct(CvService $cv, EmailService $email)
+    {
+        $this->cv = $cv;
+        $this->email = $email;
+    }
+
     public function index(CV $cv) 
     {
-    	return view('cv', ['cv' => $cv]);
+        $resultValidation = $this->email->check($cv->email);
+        //dd($resultValidation['success']);
+        if (!$resultValidation['success'] && !$resultValidation['result']) {
+            $emailIcon = 'ban';
+            $iconColor = 'uk-text-warning';
+        }
+
+        if ($resultValidation['success'] && !$resultValidation['result']) {
+            $emailIcon = 'close';
+            $iconColor = 'uk-text-danger';
+        }
+
+        if ($resultValidation['success'] && $resultValidation['result']) {
+            $emailIcon = 'check';
+            $iconColor = 'uk-text-success';
+        }
+
+    	//return view('cv', array_merge(['cv' => $cv], $resultValidation));
+        return view('cv', [
+            'cv' => $cv,
+            'emailIcon' => $emailIcon,
+            'iconColor' => $iconColor
+        ]);
     }
 
     public function showCreatePage(CV $cv, Request $request) 
@@ -45,38 +75,42 @@ class CvController extends Controller
 
     	]);
     }
-
+ 
     public function create(CvRequest $request) 
     {
     	$validated = $request->validated();
-        //var_dump($request->imageLink);die();
-        $image_name = time().'.'.$request->image_link->extension();   
-        $request->image_link->move(public_path('images'), $image_name);
-        $cv = new CV;
 
-        $cv->first_name = $request->first_name;
-        $cv->last_name = $request->last_name;
-        $cv->profession = $request->profession;
-        $cv->salary = $request->salary;
-        $cv->currency = $request->currency;
-        $cv->city = $request->city;
-        $cv->street_address = $request->street;
-        $cv->region = $request->region;
-        $cv->country = $request->country;
-        $cv->zip_code = $request->zip_code;
-        $cv->phone_number = $request->phone_number;
-        $cv->email = $request->email;
-        $cv->education = $request->education;
-        $cv->experience = $request->experience;
-        $cv->skills = $request->skills;
-        $cv->language = $request->language;
-        $cv->age = $request->age;
-        $cv->schedule = $request->schedule;
-        $cv->add_information = $request->add_information;
-        $cv->image_link = $image_name;
-        $cv->user_id = Auth::user()->id;
+        $image_name ='';
 
-        $cv->save();
+        if (isset($request->image_link)) {
+            $image_name = time().'.'.$request->image_link->extension();  
+            $request->image_link
+                ->move(public_path('images'), $image_name);
+        }
+
+        $this->cv->create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'profession' => $request->profession,
+            'salary' => $request->salary,
+            'currency' => $request->currency,
+            'city' => $request->city,
+            'street_address' => $request->street,
+            'region' => $request->region,
+            'country' => $request->country,
+            'zip_code' => $request->zip_code,
+            'phone_number' => $request->phone_number,
+            'email' => $request->email,
+            'education' => $request->education,
+            'experience' => $request->experience,
+            'skills' => $request->skills,
+            'language' => $request->language,
+            'age' => $request->age,
+            'schedule' => $request->schedule,
+            'add_information' => $request->add_information,
+            'image_link' => $image_name,
+            'user_id' => Auth::user()->id
+        ]);
 
     	return redirect()->route('home');
     }
@@ -93,53 +127,61 @@ class CvController extends Controller
     public function update(CvRequest $request, CV $cv) 
     {
     	$validated = $request->validated();
-        $oldFileContent = base64_encode(file_get_contents(public_path('images') . '/' . $cv->image_link));
-        $newFileContent = base64_encode(file_get_contents($request->image_link->getPathname()));
 
-        if ($request->image_link && $oldFileContent != $newFileContent) {
+        $imageContent = true;
+
+        $updatedFields = [
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'profession' => $request->profession,
+            'salary' => $request->salary,
+            'currency' => $request->currency,
+            'city' => $request->city,
+            'street_address' => $request->street,
+            'region' => $request->region,
+            'country' => $request->country,
+            'zip_code' => $request->zip_code,
+            'phone_number' => $request->phone_number,
+            'email' => $request->email,
+            'education' => $request->education,
+            'experience' => $request->experience,
+            'skills' => $request->skills,
+            'language' => $request->language,
+            'age' => $request->age,
+            'schedule' => $request->schedule,
+            'add_information' => $request->add_information
+        ];
+
+        if ($cv->image_link && $request->image_link) {            
+            $oldFileContent = base64_encode(file_get_contents(public_path('images') . '/' . $cv->image_link));
+            $newFileContent = base64_encode(file_get_contents($request->image_link->getPathname()));
+
+            $imageContent = ($oldFileContent != $newFileContent);
+        }    
+
+        if ($request->image_link && $imageContent) {
             $image_name = time().'.'.$request->image_link->extension();   
             $request->image_link->move(public_path('images'), $image_name);
 
-            $cv->image_link = $image_name;
+            $updatedFields += ['image_link' => $image_name];
         }
 
-    	$cv->first_name = $request->first_name;
-        $cv->last_name = $request->last_name;
-        $cv->profession = $request->profession;
-        $cv->salary = $request->salary;
-        $cv->currency = $request->currency;
-        $cv->city = $request->city;
-        $cv->street_address = $request->street;
-        $cv->region = $request->region;
-        $cv->country = $request->country;
-        $cv->zip_code = $request->zip_code;
-        $cv->phone_number = $request->phone_number;
-        $cv->email = $request->email;
-        $cv->education = $request->education;
-        $cv->experience = $request->experience;
-        $cv->skills = $request->skills;
-        $cv->language = $request->language;
-        $cv->age = $request->age;
-        $cv->schedule = $request->schedule;
-        $cv->add_information = $request->add_information;
-
-        $cv->save();
+        $this->cv->update($cv->id, $updatedFields);
 
     	return view('cv', [
-    		'cv' => $cv
-    	]);
+            'cv' => $cv
+        ]);
     }
 
-    public function delete(CV $cv) 
+    public function delete(int $cv) 
     {
-    	$cv->delete();
+        $this->cv->delete($cv);
     	return redirect()->route('home');
     }
 
-    public function check(CV $cv) 
+    public function check(int $cv) 
     {
-    	$cv->checked = 1;
-    	$cv->save();
+        $this->cv->check($cv, ['checked' => 1]);
     	return redirect()->route('home');
     }
 }

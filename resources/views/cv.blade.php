@@ -61,9 +61,18 @@
                     @endif
                 </div>
                 @can('view', $cv)
-                	<h4 class="uk-margin-remove">
-		            	Email:  {{ $cv->email }}
-		            </h4>
+                	<div uk-grid class='uk-margin-remove-top'>
+                        <div class="uk-width-auto">
+		                	<h4 class="uk-margin-remove">
+				            	Email: {{ $cv->email }}
+				            </h4>
+				        </div>
+			            @can('check', $cv)
+				            <div class="uk-width-auto {{ $iconColor }}">
+				            	<span class="uk-margin-small-right" uk-icon="{{$emailIcon}}"></span>            	
+				            </div>
+			            @endcan
+			        </div>			           
 		            <h4 class="uk-margin-remove">
 		            	Phone number: {{ $cv->phone_number }}
 		            </h4>
