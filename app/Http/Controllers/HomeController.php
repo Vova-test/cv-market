@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\CvService;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
 
 class HomeController extends Controller
 {
@@ -38,7 +39,7 @@ class HomeController extends Controller
             'pagination' => self::COUNT_CVS,
             'page'  => $request['page']
         ]);
-
-        return response()->json($response);
+        //return response()->json($response);
+        return new JsonResponse($response);
     }
 }

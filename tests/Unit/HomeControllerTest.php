@@ -6,35 +6,42 @@ use App\Services\CvService;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 
 class HomeControllerTest extends TestCase
 {
-    /**
-     * A basic unit test example.
-     *
-     * @return void
-     */
     public function testShow()
     {
-    	$request = Request::create('/home/show', 'GET');
-
-        $request->setRouteResolver(function () use ($request) {
+    	$request = Request::create('/home/show?checked=1&page=1', 'GET');
+    	$request->setRouteResolver(function () use ($request) {
             $route = new Route('GET', '/home/show', []);
 
             return $route->bind($request);
         });
 
-        $request
-        	->headers
-        	->add([
-        		"checked" => 1, 
-			    "page" => 1
-			]);
-
         $cvServiceMock = Mockery::mock(CvService::class);
-        //$requestMock = Mockery::mock(Request::class);
+        //$userMock = Mockery::mock(User::class);
+
+		$userMock = new User([
+		    'id' => 1,
+		    'name' => 'John',
+		    'type' => 'manager'
+		]);
+
+		Auth::shouldReceive('check')
+			->once()
+			->andReturn(true);
+
+		Auth::shouldReceive('user')
+			->once()
+			->andReturn($userMock);
+
+		/*$userMock->shouldReceive('MANAGER_TYPE')
+                    ->once()
+                    ->andReturn('manager');*/
 
         $cvServiceMock->shouldReceive('paginate')
                     ->once()
@@ -53,22 +60,10 @@ class HomeControllerTest extends TestCase
 			            "image_link" => '2020-03-17 18:18:45'
 			        ]);
 
-		/*$requestMock->once()
-                    ->andReturn([
-			            "checked" => 1, 
-			            "page" => 1
-			        ]);*/
-
         $homeController = new HomeController($cvServiceMock);
 
-        /*$request = (object) [
-        	"checked" => 1, 
-			"page" => 1
-		];*/
-
-        //$result = $homeController->show($requestMock);
         $result = $homeController->show($request);
-
+        //dump($result);die();
         $this->assertEquals(
         	[
 	            "id" => 1, 
@@ -84,6 +79,5 @@ class HomeControllerTest extends TestCase
 	            "created_at" => '2020-03-17 18:18:45',
 	            "image_link" => '2020-03-17 18:18:45'
 	        ], $result);
-
     }
 }
