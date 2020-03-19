@@ -35,7 +35,6 @@ class EmailService extends BaseService
         $apiAnswer = $this->emailService->isEmailValid($email);
 
         if ($apiAnswer['success']) {
-            //dd('updateOrCreate');
             $this->updateOrCreate([
                 'email' => $email,
                 'validated' => $apiAnswer['result']

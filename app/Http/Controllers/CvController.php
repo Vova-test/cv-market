@@ -37,7 +37,6 @@ class CvController extends Controller
             $iconColor = 'uk-text-success';
         }
 
-    	//return view('cv', array_merge(['cv' => $cv], $resultValidation));
         return view('cv', [
             'cv' => $cv,
             'emailIcon' => $emailIcon,
