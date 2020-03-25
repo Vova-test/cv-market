@@ -5,7 +5,7 @@
         <div class="uk-card uk-card-default uk-card-hover uk-width-1-1 uk-margin-top">
         	<div class="uk-card-header uk-padding-remove-bottom uk-background-muted">
         		<p uk-margin>
-        			<a class="uk-button-small uk-button-primary" href="#" uk-icon="icon: file-pdf"></a>
+        			<div class="uk-button-small uk-button-primary" href="#" uk-icon="icon: file-pdf" onclick="clickButton('{{ route('add.pdf',['cv'=>$cv->id]) }}')"></div>
         			@can('update', $cv)
         				<a class="uk-button-small uk-button-primary" href="{{ route('showUpdatePage',['cv'=>$cv->id]) }}" uk-icon="icon: file-edit"></a>
 				    	<a class="uk-button-small uk-button-danger" href="{{ route('deleteCV',['cv'=>$cv->id]) }}" uk-icon="icon: trash"></a>
@@ -13,6 +13,7 @@
 				    @can('check', $cv)	
 				    	<a class="uk-button-small uk-button-primary" href="{{ route('checkCV',['cv'=>$cv->id]) }}" uk-icon="icon: check"></a>
 				    @endcan
+				    <div id="message"></div>
 				    <a class="uk-button-small uk-button-primary uk-align-right" href="/#cv-{{ $cv->id }}" uk-icon="icon: close"></a>
 				</p>
 			</div>
@@ -146,4 +147,16 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+		async function clickButton(cv) {
+			const message = document.getElementById('message');
+			try {
+				const response = await fetch(cv);			
+				const result = await response.text();
+				message.innerHTML += result;
+			} catch (error) {
+			  	message.innerHTML += error;
+			}
+		}
+	</script>
 @endsection

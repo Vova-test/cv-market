@@ -44,3 +44,5 @@ Route::post('image-upload', 'ImageUploadController@imageUploadPost')->name('imag
 Route::get('/template/index', 'TemplateController@index');
 Route::get('/template/show', 'TemplateController@show');
 Route::get('/test', 'TestController@test');
+
+Route::get('/add/pdf/to/queue', 'PdfController@addPdf')->name('add.pdf');
