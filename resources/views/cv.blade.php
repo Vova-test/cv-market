@@ -149,17 +149,19 @@
     </div>
     <script type="text/javascript">
 		async function clickButton(url) {
-			console.log(url);
 			const message = document.getElementById('message');
 			try {
 				const response = await fetch(url,
 				{
 				    method: "POST"
 				});			
-				const result = await response.text();
-				message.innerHTML += result;
+				const result = await response.json();
+				console.log(result.success);
+				if (true) {
+					message.innerHTML = "The CV will be convert to PDF file format!";
+				}
 			} catch (error) {
-			  	message.innerHTML += error;
+			  	message.innerHTML = error;
 			}
 		}
 	</script>

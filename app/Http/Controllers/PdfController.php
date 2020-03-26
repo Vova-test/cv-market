@@ -29,9 +29,9 @@ class PdfController extends Controller
 		]);
 
 		if ($request->getBody()->getContents()) {
-			return "The CV will be convert to PDF file format!";
+			return response()->json(['success' => true]);
 		}
-
-		return "There is error 'convert file to PDF'!";
+		return response()->json(['success' => false]);
+		//return "There is error 'convert file to PDF'!";
     }
 }
