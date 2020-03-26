@@ -5,7 +5,7 @@
         <div class="uk-card uk-card-default uk-card-hover uk-width-1-1 uk-margin-top">
         	<div class="uk-card-header uk-padding-remove-bottom uk-background-muted">
         		<p uk-margin>
-        			<div class="uk-button-small uk-button-primary" href="#" uk-icon="icon: file-pdf" onclick="clickButton('{{ route('add.pdf',['cv'=>$cv->id]) }}')"></div>
+        			<div class="uk-button-small uk-button-primary" href="#" uk-icon="icon: file-pdf" onclick="clickButton('{{ route('generate.pdf',['cv'=>$cv->id]) }}')"></div>
         			@can('update', $cv)
         				<a class="uk-button-small uk-button-primary" href="{{ route('showUpdatePage',['cv'=>$cv->id]) }}" uk-icon="icon: file-edit"></a>
 				    	<a class="uk-button-small uk-button-danger" href="{{ route('deleteCV',['cv'=>$cv->id]) }}" uk-icon="icon: trash"></a>
@@ -148,10 +148,14 @@
         </div>
     </div>
     <script type="text/javascript">
-		async function clickButton(cv) {
+		async function clickButton(url) {
+			console.log(url);
 			const message = document.getElementById('message');
 			try {
-				const response = await fetch(cv);			
+				const response = await fetch(url,
+				{
+				    method: "POST"
+				});			
 				const result = await response.text();
 				message.innerHTML += result;
 			} catch (error) {
@@ -160,3 +164,5 @@
 		}
 	</script>
 @endsection
+
+
