@@ -32,6 +32,5 @@ class PdfController extends Controller
 			return response()->json(['success' => true]);
 		}
 		return response()->json(['success' => false]);
-		//return "There is error 'convert file to PDF'!";
     }
 }

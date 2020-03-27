@@ -156,10 +156,11 @@
 				    method: "POST"
 				});			
 				const result = await response.json();
-				console.log(result.success);
-				if (true) {
+				if (result.success) {
 					message.innerHTML = "The CV will be convert to PDF file format!";
 				}
+
+				message.innerHTML = "There is error 'convert file to PDF'!";
 			} catch (error) {
 			  	message.innerHTML = error;
 			}
