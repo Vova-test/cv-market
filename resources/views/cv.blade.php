@@ -154,13 +154,15 @@
 				const response = await fetch(url,
 				{
 				    method: "POST"
-				});			
+				});	
+
 				const result = await response.json();
+				
 				if (result.success) {
 					message.innerHTML = "The CV will be convert to PDF file format!";
+				} else {
+					message.innerHTML = "There is error 'convert file to PDF'!";
 				}
-
-				message.innerHTML = "There is error 'convert file to PDF'!";
 			} catch (error) {
 			  	message.innerHTML = error;
 			}

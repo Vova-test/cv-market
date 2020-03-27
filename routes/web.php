@@ -46,3 +46,4 @@ Route::get('/template/show', 'TemplateController@show');
 Route::get('/test', 'TestController@test');
 
 Route::post('/cv/generate-pdf/{cv}', 'PdfController@addPdf')->name('generate.pdf');
+Route::get('/generate-cv-to-pdf/{cv}', 'CvToPDFController@index')->name('cv-to-pdf');
