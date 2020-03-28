@@ -30,6 +30,7 @@ class CvToPDFController extends Controller
             ]);
 
             $result = $request->getBody()->getContents();
+            var_dump(json_decode($result));die();
         //Get image content
         if (!empty($cv->image_link)) {
             $imageContent = base64_encode(File::get(public_path('/images/'.$cv->image_link)));

@@ -44,8 +44,8 @@ class ProcessPdfQueue extends Command
     {
         while (true) {
             $headers = [
-            'email' => env('QUEUE_API_EMAIL'),
-            'password' => env('QUEUE_API_PASSWORD')
+                'email' => env('QUEUE_API_EMAIL'),
+                'password' => env('QUEUE_API_PASSWORD')
             ];
 
             $client = new GuzzleClient([
@@ -55,18 +55,20 @@ class ProcessPdfQueue extends Command
             $title = env('QUEUE_API_TITLE');
 
             $request = $client->request('POST', "http://queue-and-api.loc/api/content/get",[
-                'form_params' => [
+                    'form_params' => [
                     'title' => $title
                 ]
             ]);
 
-            $result = $request->getBody()->getContents();
-            if (!$result) {
+            $apiResult = json_decode($request->getBody()->getContents());
+
+            if (!$apiResult) {
                 sleep(1);
                 continue;
             }
 
-            $cv = CV::find(json_decode($result)->content);
+            $cvId = $apiResult->content;
+            $cv = CV::find($cvId);
 
             if (empty($cv)) {
                 sleep(1);
@@ -83,14 +85,23 @@ class ProcessPdfQueue extends Command
             // pass view file
             $pdf = PDF::loadView('cv_pdf', [
                 'cv' => $cv,
-                'imageContent' => $imageContent
+                'imageContent' => $imageContent ?? ''
             ]);
+
             // download pdf
-            return $pdf->save(public_path().'/images/pdf/cv_' . $cv->id . '.pdf')
-                       ->stream();
-            
+            $pdfResult = $pdf->save(public_path().'/images/pdf/cv_' . $cv->id . '.pdf')
+                          ->stream();
+
+            if ($pdfResult) {
+                $request = $client->request('POST', "http://queue-and-api.loc/api/content/delete-queue-row",[
+                    'form_params' => [
+                        'title' => $title,
+                        'content' => $cvId
+                    ]
+                ]);
+            }     
+
             sleep(1);
-            die();
         }
     }
 }
