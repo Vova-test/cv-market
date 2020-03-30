@@ -5,7 +5,12 @@
         <div class="uk-card uk-card-default uk-card-hover uk-width-1-1 uk-margin-top">
         	<div class="uk-card-header uk-padding-remove-bottom uk-background-muted">
         		<p uk-margin>
-        			<div class="uk-button-small uk-button-primary" href="#" uk-icon="icon: file-pdf" onclick="clickButton('{{ route('generate.pdf',['cv'=>$cv->id]) }}')"></div>
+        			@if($cv->pdf_path)
+        				<a class="uk-button-small uk-button-primary" href=
+        				"{{ asset($cv->pdf_path) }}" uk-icon="icon: file-pdf" ></a>
+        			@else
+        				<div class="uk-button-small uk-button-primary" href="#" uk-icon="icon: file-pdf" onclick="clickButton('{{ route('generate.pdf',['cv'=>$cv->id]) }}')"></div>
+        			@endif
         			@can('update', $cv)
         				<a class="uk-button-small uk-button-primary" href="{{ route('showUpdatePage',['cv'=>$cv->id]) }}" uk-icon="icon: file-edit"></a>
 				    	<a class="uk-button-small uk-button-danger" href="{{ route('deleteCV',['cv'=>$cv->id]) }}" uk-icon="icon: trash"></a>

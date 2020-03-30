@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client as GuzzleClient;
 
-
 class PdfController extends Controller
 {
     public function addPdf(int $cv)

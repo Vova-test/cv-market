@@ -77,7 +77,6 @@ class ProcessPdfQueue extends Command
 
             if (!empty($cv->image_link)) {
                 $imageContent = base64_encode(File::get(public_path('/images/'.$cv->image_link)));
-                //var_dump($imageContent);die();
             }
             //Set extra option
             PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
@@ -88,11 +87,15 @@ class ProcessPdfQueue extends Command
                 'imageContent' => $imageContent ?? ''
             ]);
 
+            $pdfPath = '/images/pdf/cv_' . $cv->id . '.pdf';
             // download pdf
-            $pdfResult = $pdf->save(public_path().'/images/pdf/cv_' . $cv->id . '.pdf')
+            $pdfResult = $pdf->save(public_path() . $pdfPath)
                           ->stream();
 
             if ($pdfResult) {
+                $cv->pdf_path = $pdfPath;
+                $cv->save();
+
                 $request = $client->request('POST', "http://queue-and-api.loc/api/content/delete-queue-row",[
                     'form_params' => [
                         'title' => $title,
